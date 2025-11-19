@@ -1,0 +1,5 @@
+exports/
+.venv
+keys.env
+.vscode/
+spaces.txt
