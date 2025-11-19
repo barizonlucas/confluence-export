@@ -1,5 +1,5 @@
 exports/
 .venv
-keys.env
+local.env
 .vscode/
 spaces.txt

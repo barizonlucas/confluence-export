@@ -1,11 +1,14 @@
 from atlassian import Confluence
 import os
 import requests
+from dotenv import load_dotenv
+
+load_dotenv("local.env")
 
 # ========= CONFIGURAÇÕES MANUAIS =========
-CONF_OLD_URL = "https://entelgy.atlassian.net/wiki"
-CONF_OLD_USER = ""
-CONF_OLD_TOKEN = ""
+CONF_OLD_URL = os.getenv("CONF_OLD_URL", "")
+CONF_OLD_USER = os.getenv("CONF_OLD_USER", "")
+CONF_OLD_TOKEN = os.getenv("CONF_OLD_TOKEN", "")
 SPACES_FILE = "spaces.txt"
 EXPORT_DIR = "exports"
 # =========================================
@@ -38,6 +41,11 @@ def export_space(confluence, space_key: str):
 def main():
     print("Iniciando script de export de spaces...")
 
+    if not CONF_OLD_URL or not CONF_OLD_USER or not CONF_OLD_TOKEN:
+        print("ERRO: Variáveis de ambiente de Confluence não configuradas corretamente.")
+        print("Verifique o arquivo local.env e as chaves: CONF_OLD_URL, CONF_OLD_USER, CONF_OLD_TOKEN.")
+        return
+    
     # valida arquivo spaces.txt
     if not os.path.exists(SPACES_FILE):
         print(f"ERRO: Arquivo {SPACES_FILE} não encontrado na pasta atual.")
